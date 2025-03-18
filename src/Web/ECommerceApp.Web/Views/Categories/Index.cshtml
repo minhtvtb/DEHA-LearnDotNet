@@ -1,0 +1,24 @@
+@model IEnumerable<ECommerceApp.Core.DTOs.CategoryDto>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="container">
+    <h1 class="mb-4">Categories</h1>
+    
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                        <p class="card-text">@category.Description</p>
+                        <a asp-action="Details" asp-route-id="@category.Id" class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div> 

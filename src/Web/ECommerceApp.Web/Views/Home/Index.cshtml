@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ECommerceApp.Core.DTOs.ProductDto>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4">Welcome to Our E-Commerce Store</h1>
+    <p class="lead">Discover our amazing products at competitive prices.</p>
+</div>
+
+<div class="container">
+    <h2 class="mb-4">Featured Products</h2>
+    
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="/images/placeholder.jpg" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description.Substring(0, Math.Min(product.Description.Length, 100))@(product.Description.Length > 100 ? "..." : "")</p>
+                        <p class="card-text"><strong>$@product.Price.ToString("F2")</strong></p>
+                        <div class="d-flex justify-content-between">
+                            <a href="@Url.Action("Details", "Products", new { id = product.Id })" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-success add-to-cart" data-id="@product.Id">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('.add-to-cart').click(function() {
+                var productId = $(this).data('id');
+                alert('Product added to cart: ' + productId);
+            });
+        });
+    </script>
+}
